@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Double the default font size (10 -> 30); labels, titles, legends and ticks all scale with it
+plt.rcParams["font.size"] = 30
+
 sigma = 10.0
 rho = 28.0
 beta = 8.0 / 3.0
@@ -70,28 +73,30 @@ for use_sender_x, name in [(True, "book"), (False, "x2_damping")]:
     print(f"Maximum full-state error for 40 <= t <= 60: {max_error:.6e}")
     print(f"Full-state synchronisation: {max_error < sync_tolerance}\n")
 
-    fig, ax = plt.subplots(2, 2, figsize=(11, 7))
+    fig, ax = plt.subplots(2, 2, figsize=(22, 13))
     for coordinate, label in enumerate(["x", "y", "z"]):
         ax[0, 0].semilogy(t, np.maximum(np.abs(difference[:, coordinate]), 1e-15), label=label)
     ax[0, 0].semilogy(t, np.maximum(error, 1e-15), color="black", ls="--", lw=0.9, label="Full state")
     ax[0, 0].axhline(sync_tolerance, color="gray", ls="--", label="Criterion")
     ax[0, 0].set_xlabel("Time t")
     ax[0, 0].set_ylabel("Coordinate error")
-    ax[0, 0].set_title("Plot floor: 1e-15")
-    ax[0, 0].legend()
+    ax[0, 0].set_title("Plot floor: 1e-15", pad=150)
+    ax[0, 0].legend(loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=3, frameon=False, columnspacing=0.8, handlelength=1.2)
 
     for row, coordinate, label in [(0, 0, "x"), (1, 1, "y")]:
         ax[row, 1].plot(t[plot_window], U[plot_window, coordinate], color="black", lw=0.9, label="Sender")
         ax[row, 1].plot(t[plot_window], U[plot_window, coordinate + 3], color="tab:orange", ls="--", lw=0.9, label="Receiver")
         ax[row, 1].set_xlabel("Time t")
         ax[row, 1].set_ylabel(f"{label} coordinate")
-        ax[row, 1].legend()
+        ax[row, 1].legend(loc="lower center", bbox_to_anchor=(0.5, 1.0), ncol=2, frameon=False)
 
     ax[1, 0].plot(U[plot_window, 0], U[plot_window, 3], color="black", lw=0.7)
     ax[1, 0].plot([-25, 25], [-25, 25], color="gray", ls="--", lw=0.8)
     ax[1, 0].set_xlim(-25, 25)
     ax[1, 0].set_ylim(-25, 25)
     ax[1, 0].set_aspect("equal", adjustable="box")
+    ax[1, 0].set_xticks([-20, 0, 20])
+    ax[1, 0].set_yticks([-20, 0, 20])
     ax[1, 0].set_xlabel("Sender x1")
     ax[1, 0].set_ylabel("Receiver x2")
     for axis in ax.flat:

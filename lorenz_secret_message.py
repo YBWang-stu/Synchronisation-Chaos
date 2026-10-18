@@ -3,6 +3,9 @@ from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Triple the default font size (10 -> 30); labels, titles, legends and ticks all scale with it
+plt.rcParams["font.size"] = 30
+
 sigma = 10.0
 rho = 28.0
 beta = 8.0 / 3.0
@@ -121,7 +124,7 @@ for name, A, f in cases:
 
     # Show ten fast cycles, or one full slow cycle.
     plot_window = t >= (58.0 if f >= 1.0 else 50.0)
-    fig, ax = plt.subplots(3, 1, figsize=(11, 8), sharex=True)
+    fig, ax = plt.subplots(3, 1, figsize=(22, 16), sharex=True)
     ax[0].plot(t[plot_window], original[plot_window], color="black")
     ax[0].set_title("Original message")
     ax[0].set_ylabel("m(t)")
@@ -132,10 +135,10 @@ for name, A, f in cases:
 
     ax[2].plot(t[plot_window], original[plot_window], color="black", label="Original")
     ax[2].plot(t[plot_window], recovered[plot_window], color="tab:orange", ls="--", label="Recovered")
-    ax[2].set_title("Message recovery: recovered(t) = s(t) - x2(t)")
+    ax[2].set_title("Message recovery: recovered(t) = s(t) - x2(t)", loc="left")
     ax[2].set_ylabel("Message")
     ax[2].set_xlabel("Time t")
-    ax[2].legend()
+    ax[2].legend(loc="lower right", bbox_to_anchor=(1.0, 1.0), ncol=2, frameon=False, handlelength=1.5, columnspacing=0.8)
     for axis in ax:
         axis.grid(alpha=0.25)
     fig.suptitle(f"{name.replace('_', ' ').title()}: A = {A}, f = {f}")
