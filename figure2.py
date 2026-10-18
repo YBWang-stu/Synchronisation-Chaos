@@ -245,7 +245,7 @@ def main():
 
         for subfig, use_sender_x, name, label in [
             (blocks[0], True, "book", "(a)"),
-            (blocks[1], False, "x2_damping", "(B)"),
+            (blocks[1], False, "x2_damping", "(b)"),
         ]:
             times, history = simulate(use_sender_x)
             difference, full_error, yz_error = measure_errors(history)
